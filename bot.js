@@ -141,6 +141,18 @@ async function authenticate(retries = 3) {
 
 }
 
+const newAddress = async (address) => {
+    console.log('Trying to add a new address');
+    try {
+        const postAddress = await authPost("https://2.rome.api.flipkart.com/api/3/user/contact", address);
+        console.log(postAddress.data);
+    } catch(err) {
+        console.log('Error adding address: ', err.message);
+
+    }
+
+}
+
 async function emptyCart() {
     console.log('Trying to empty cart');
     const viewCartPayload = {
@@ -289,6 +301,17 @@ async function startPaymentProcess() {
 
 async function init() {
     await authenticate();
+    await newAddress({
+        "name": "bruh",
+        "addressLine1": "302, Shashi Shikhara (Building #56), Planet Homes, JR Layout, Harluru",
+        "addressLine2": "Harluru",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560103",
+        "phone": "9344440018",
+        "alternatePhone": "9344440018",
+        "locationTypeTag": "HOME"
+    });
     await emptyCart();
     await addToCart();
     console.log('\x07');
